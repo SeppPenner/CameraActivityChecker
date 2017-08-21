@@ -17,29 +17,33 @@ namespace CameraActivityChecker
         private void Initialize()
         {
             InitializeTrayIcon();
+            //USB\VID_04F2&PID_B354&MI_00\7&47877a&0&0000
+            var connected = IsUsbDeviceConnected("PID_B354", "VID_04F2");
         }
 
-        private void Query()
+
+        private bool IsUsbDeviceConnected(string pid, string vid)
         {
-            var win32DeviceClassName = "win32_processor";
-            var query = $"select * from {win32DeviceClassName}";
-
-            using (var searcher = new ManagementObjectSearcher(query))
+            using (var searcher =
+              new ManagementObjectSearcher(@"Select * From Win32_USBControllerDevice"))
             {
-                var objectCollection = searcher.Get();
-
-                foreach (var managementBaseObject in objectCollection)
+                using (var collection = searcher.Get())
                 {
-                    foreach (var propertyData in managementBaseObject.Properties)
+                    foreach (var device in collection)
                     {
-                        Console.WriteLine(@"Property:  {0}, Value: {1}", propertyData.Name, propertyData.Value);
+                       
+                        var usbDevice = Convert.ToString(device);
+
+                        if (usbDevice.Contains(pid) && usbDevice.Contains(vid))
+                            return true;
                     }
                 }
             }
+            return false;
         }
 
 
-        private void InitializeTrayIcon()
+    private void InitializeTrayIcon()
         {
             _trayIcon.Text = @"";
             _trayIcon.Visible = true;
