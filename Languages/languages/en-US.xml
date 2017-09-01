@@ -7,5 +7,9 @@
 			<Key>CameraActivated</Key>
 			<Value>The camera got activated!</Value>
 		</Word>
+		<Word>
+			<Key>CameraDeactivated</Key>
+			<Value>The camera got deactivated!</Value>
+		</Word>
 	</Words>
 </Language>
