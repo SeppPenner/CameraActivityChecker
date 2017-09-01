@@ -1,6 +1,4 @@
 ﻿using System.Reflection;
-using System.Resources;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows;
 
@@ -8,12 +6,12 @@ using System.Windows;
 // Attribute gesteuert. Ändern Sie diese Attributwerte, um die Informationen zu ändern,
 // die einer Assembly zugeordnet sind.
 [assembly: AssemblyTitle("CameraActivityChecker")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyDescription("CameraActivityChecker")]
+[assembly: AssemblyConfiguration("CameraActivityChecker")]
+[assembly: AssemblyCompany("Hämmer Electronics")]
 [assembly: AssemblyProduct("CameraActivityChecker")]
-[assembly: AssemblyCopyright("Copyright ©  2017")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCopyright("Copyright © Hämmer Electronics")]
+[assembly: AssemblyTrademark("CameraActivityChecker")]
 [assembly: AssemblyCulture("")]
 
 // Durch Festlegen von ComVisible auf FALSE werden die Typen in dieser Assembly
@@ -33,11 +31,11 @@ using System.Windows;
 
 [assembly: ThemeInfo(
     ResourceDictionaryLocation.None, //Speicherort der designspezifischen Ressourcenwörterbücher
-                                     //(wird verwendet, wenn eine Ressource auf der Seite nicht gefunden wird,
-                                     // oder in den Anwendungsressourcen-Wörterbüchern nicht gefunden werden kann.)
+    //(wird verwendet, wenn eine Ressource auf der Seite nicht gefunden wird,
+    // oder in den Anwendungsressourcen-Wörterbüchern nicht gefunden werden kann.)
     ResourceDictionaryLocation.SourceAssembly //Speicherort des generischen Ressourcenwörterbuchs
-                                              //(wird verwendet, wenn eine Ressource auf der Seite nicht gefunden wird,
-                                              // designspezifischen Ressourcenwörterbuch nicht gefunden werden kann.)
+    //(wird verwendet, wenn eine Ressource auf der Seite nicht gefunden wird,
+    // designspezifischen Ressourcenwörterbuch nicht gefunden werden kann.)
 )]
 
 
