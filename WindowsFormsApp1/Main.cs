@@ -68,6 +68,11 @@ namespace CameraActivityChecker
         {
             var message = _language.GetWord("CameraActivated");
             var toastNotification = GetNotification(message);
+            ShowNotificationDelayed(toastNotification);
+        }
+
+        private void ShowNotificationDelayed(Notification toastNotification)
+        {
             toastNotification.Show();
             Thread.Sleep(2000);
             toastNotification.Hide();
