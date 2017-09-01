@@ -8,12 +8,11 @@ namespace CameraActivityChecker.Notifications
     public partial class Notification : Form
     {
         private static readonly List<Notification> OpenNotifications = new List<Notification>();
-        private bool _allowFocus;
         private readonly FormAnimator _animator;
+        private bool _allowFocus;
         private IntPtr _currentForegroundWindow;
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="title"></param>
         /// <param name="body"></param>
@@ -21,7 +20,8 @@ namespace CameraActivityChecker.Notifications
         /// <param name="animation"></param>
         /// <param name="direction"></param>
         // ReSharper disable once InheritdocConsiderUsage
-        public Notification(string title, string body, int duration, FormAnimator.AnimationMethod animation, FormAnimator.AnimationDirection direction)
+        public Notification(string title, string body, int duration, FormAnimator.AnimationMethod animation,
+            FormAnimator.AnimationDirection direction)
         {
             InitializeComponent();
 
@@ -40,10 +40,10 @@ namespace CameraActivityChecker.Notifications
         }
 
         /// <summary>
-        /// Displays the form
+        ///     Displays the form
         /// </summary>
         /// <remarks>
-        /// Required to allow the form to determine the current foreground window before being displayed
+        ///     Required to allow the form to determine the current foreground window before being displayed
         /// </remarks>
         // ReSharper disable once UnusedMember.Global
         public new void Show()
@@ -58,13 +58,11 @@ namespace CameraActivityChecker.Notifications
         {
             // Display the form just above the system tray.
             Location = new Point(Screen.PrimaryScreen.WorkingArea.Width - Width,
-                                      Screen.PrimaryScreen.WorkingArea.Height - Height);
+                Screen.PrimaryScreen.WorkingArea.Height - Height);
 
             // Move each open form upwards to make room for this one
             foreach (var openForm in OpenNotifications)
-            {
                 openForm.Top -= Height;
-            }
 
             OpenNotifications.Add(this);
             lifeTimer.Start();
@@ -74,10 +72,7 @@ namespace CameraActivityChecker.Notifications
         {
             // Prevent the form taking focus when it is initially shown
             if (!_allowFocus)
-            {
-                // Activate the window that previously had focus
                 NativeMethods.SetForegroundWindow(_currentForegroundWindow);
-            }
         }
 
         private void Notification_Shown(object sender, EventArgs e)
@@ -96,10 +91,7 @@ namespace CameraActivityChecker.Notifications
             foreach (var openForm in OpenNotifications)
             {
                 if (openForm == this)
-                {
-                    // Remaining forms are below this one
                     break;
-                }
                 openForm.Top += Height;
             }
 

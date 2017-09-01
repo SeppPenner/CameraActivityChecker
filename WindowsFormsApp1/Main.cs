@@ -10,10 +10,10 @@ namespace CameraActivityChecker
 {
     public partial class Main : Form
     {
-        private Capture _capture;
-        private ILanguageManager _languageManager;
-        private ILanguage _language;
         private bool _cameraActivated;
+        private Capture _capture;
+        private ILanguage _language;
+        private ILanguageManager _languageManager;
 
         public Main()
         {
@@ -75,13 +75,14 @@ namespace CameraActivityChecker
 
         private Notification GetNotification(string message)
         {
-            return new Notification(message, message, 1000, FormAnimator.AnimationMethod.Center, FormAnimator.AnimationDirection.Down);
+            return new Notification(message, message, 1000, FormAnimator.AnimationMethod.Center,
+                FormAnimator.AnimationDirection.Down);
         }
 
         private bool IsCameraActivated()
         {
             _capture = new Capture();
-            var frame =_capture.QueryFrame();
+            var frame = _capture.QueryFrame();
             return frame != null;
         }
     }
