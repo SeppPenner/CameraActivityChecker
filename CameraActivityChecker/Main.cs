@@ -54,6 +54,7 @@ namespace CameraActivityChecker
             {
                 var activated = IsCameraActivated();
                 GC.Collect();
+                GC.WaitForPendingFinalizers();
                 if (_cameraActivated == activated) return;
                 _cameraActivated = activated;
                 ShowNotification(activated);
