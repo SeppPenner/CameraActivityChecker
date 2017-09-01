@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Windows;
+using CameraActivityChecker.Notifications;
 using Emgu.CV;
 using Languages.Implementation;
 using Languages.Interfaces;
-using ToastNotifications;
-using ToastNotifications.Lifetime;
-using ToastNotifications.Messages;
-using ToastNotifications.Position;
 
 namespace CameraActivityChecker
 {
     public partial class MainWindow : Window
     {
         private Capture _capture;
-        private Notifier _notifier;
         private ILanguageManager _languageManager;
         private ILanguage _language;
 
@@ -40,25 +36,15 @@ namespace CameraActivityChecker
         {
             while (true)
                 CheckCameraIsActive();
+            // ReSharper disable once FunctionNeverReturns
         }
 
         private void Initialize()
         {
             Visibility = Visibility.Collapsed;
-            InitToastMessages();
             _languageManager = new LanguageManager();
             _languageManager.SetCurrentLanguage("de-DE");
             _language = _languageManager.GetCurrentLanguage();
-        }
-
-        private void InitToastMessages()
-        {
-            _notifier = new Notifier(cfg =>
-            {
-                cfg.PositionProvider = new WindowPositionProvider(Application.Current.MainWindow, Corner.TopRight, 10, 10);
-                cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(TimeSpan.FromSeconds(3), MaximumNotificationCount.FromCount(5));
-                cfg.Dispatcher = Application.Current.Dispatcher;
-            });
         }
 
         private void CheckCameraIsActive()
@@ -67,7 +53,8 @@ namespace CameraActivityChecker
             {
                 InitCamera();
                 var message = _language.GetWord("CameraActivated");
-                _notifier.ShowInformation(message);
+                var toastNotification = new Notification(message, message, 1000, FormAnimator.AnimationMethod.Center, FormAnimator.AnimationDirection.Down);
+                toastNotification.Show();
             }
             catch
             {
