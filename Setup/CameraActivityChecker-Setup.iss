@@ -6,7 +6,7 @@
 #define MyAppPublisher "Hämmer Electronics"
 #define MyAppURL "https://github.com/SeppPenner/CameraActivityChecker"
 #define MyAppExeName "CameraActivityChecker.exe"
-#define MyFolderName "C:\Users\tim\Documents\Visual Studio 2017\Projects\CameraActivityChecker\CameraActivityChecker\bin\Debug"
+#define MyFolderName "C:\Users\tim\Documents\Visual Studio 2017\Projects\CameraActivityChecker\CameraActivityChecker\bin\Release"
 #define MyCopyRight "Copyright (©) Hämmer Electronics"
 #define MySetupFolder "C:\Users\tim\Documents\Visual Studio 2017\Projects\CameraActivityChecker\Setup"
 
