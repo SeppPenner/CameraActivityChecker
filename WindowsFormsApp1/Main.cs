@@ -55,8 +55,7 @@ namespace CameraActivityChecker
                 var activated = IsCameraActivated();
                 if (_cameraActivated == activated) return;
                 _cameraActivated = activated;
-                if (!activated) return;
-                ShowNotification();
+                ShowNotification(activated);
             }
             catch
             {
@@ -64,7 +63,22 @@ namespace CameraActivityChecker
             }
         }
 
-        private void ShowNotification()
+        private void ShowNotification(bool activated)
+        {
+            if (activated)
+                ShowNotificationCameraActivated();
+            else
+                ShowNotificationCameraDeactivated();
+        }
+
+        private void ShowNotificationCameraDeactivated()
+        {
+            var message = _language.GetWord("CameraDeactivated");
+            var toastNotification = GetNotification(message);
+            ShowNotificationDelayed(toastNotification);
+        }
+
+        private void ShowNotificationCameraActivated()
         {
             var message = _language.GetWord("CameraActivated");
             var toastNotification = GetNotification(message);
