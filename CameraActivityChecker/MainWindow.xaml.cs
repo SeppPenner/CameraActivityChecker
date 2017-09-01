@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows;
 using Emgu.CV;
+using Languages.Implementation;
+using Languages.Interfaces;
 using ToastNotifications;
 using ToastNotifications.Lifetime;
 using ToastNotifications.Messages;
@@ -12,6 +14,8 @@ namespace CameraActivityChecker
     {
         private Capture _capture;
         private Notifier _notifier;
+        private ILanguageManager _languageManager;
+        private ILanguage _language;
 
         public MainWindow()
         {
@@ -42,6 +46,9 @@ namespace CameraActivityChecker
         {
             Visibility = Visibility.Collapsed;
             InitToastMessages();
+            _languageManager = new LanguageManager();
+            _languageManager.SetCurrentLanguage("de-DE");
+            _language = _languageManager.GetCurrentLanguage();
         }
 
         private void InitToastMessages()
@@ -59,11 +66,12 @@ namespace CameraActivityChecker
             try
             {
                 InitCamera();
-                _notifier.ShowInformation("");
+                var message = _language.GetWord("CameraActivated");
+                _notifier.ShowInformation(message);
             }
             catch
             {
-                Console.WriteLine("");
+                Console.WriteLine("Error");
             }
         }
 
