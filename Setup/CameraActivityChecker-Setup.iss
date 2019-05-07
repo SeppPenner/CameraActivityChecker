@@ -2,11 +2,11 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "CameraActivityChecker"
-#define MyAppVersion "1.0.0.0"
+#define MyAppVersion "1.0.0.1"
 #define MyAppPublisher "Hämmer Electronics"
 #define MyAppURL "https://github.com/SeppPenner/CameraActivityChecker"
 #define MyAppExeName "CameraActivityChecker.exe"
-#define MyFolderName "F:\TODO\C# und VB\CameraActivityChecker"
+#define MyFolderName "C:\Users\tim\Desktop\Updaten_Snyk\CameraActivityChecker"
 #define MyCopyRight "Copyright (©) Hämmer Electronics"
 
 [Setup]
