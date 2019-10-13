@@ -2,11 +2,11 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "CameraActivityChecker"
-#define MyAppVersion "1.0.0.1"
+#define MyAppVersion "1.0.1.0"
 #define MyAppPublisher "Hämmer Electronics"
 #define MyAppURL "https://github.com/SeppPenner/CameraActivityChecker"
 #define MyAppExeName "CameraActivityChecker.exe"
-#define MyFolderName "C:\Users\tim\Desktop\Updaten_Snyk\CameraActivityChecker"
+#define MyFolderName "C:\Users\Tim\Documents\Git\C# und VB\CameraActivityChecker"
 #define MyCopyRight "Copyright (©) Hämmer Electronics"
 
 [Setup]
@@ -23,14 +23,14 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
-DefaultDirName={pf}\{#MyAppName}
+DefaultDirName={commonpf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
-LicenseFile={#MyFolderName}\CameraActivityChecker\bin\Debug\License.txt
+LicenseFile={#MyFolderName}\CameraActivityChecker\bin\Release\License.txt
 OutputDir={#MyFolderName}\Setup
 OutputBaseFilename=CameraActivityChecker-Setup_{#MyAppVersion}
-SetupIconFile={#MyFolderName}\CameraActivityChecker\bin\Debug\Webcam.ico
-UninstallDisplayIcon={#MyFolderName}\CameraActivityChecker\bin\Debug\Webcam.ico
+SetupIconFile={#MyFolderName}\CameraActivityChecker\bin\Release\Webcam.ico
+UninstallDisplayIcon={#MyFolderName}\CameraActivityChecker\bin\Release\Webcam.ico
 Compression=lzma
 SolidCompression=yes
 
@@ -43,31 +43,31 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Files]
-Source: "{#MyFolderName}\CameraActivityChecker\bin\Debug\CameraActivityChecker.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyFolderName}\CameraActivityChecker\bin\Debug\CameraActivityChecker.exe.config"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyFolderName}\CameraActivityChecker\bin\Debug\Emgu.CV.UI.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyFolderName}\CameraActivityChecker\bin\Debug\Emgu.CV.UI.GL.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyFolderName}\CameraActivityChecker\bin\Debug\Emgu.CV.World.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyFolderName}\CameraActivityChecker\bin\Debug\Languages.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyFolderName}\CameraActivityChecker\bin\Debug\OpenTK.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyFolderName}\CameraActivityChecker\bin\Debug\OpenTK.GLControl.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyFolderName}\CameraActivityChecker\bin\Debug\ZedGraph.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyFolderName}\CameraActivityChecker\bin\Debug\de\*"; DestDir: "{app}\de"; Flags: ignoreversion recursesubdirs
-Source: "{#MyFolderName}\CameraActivityChecker\bin\Debug\es\*"; DestDir: "{app}\es"; Flags: ignoreversion recursesubdirs
-Source: "{#MyFolderName}\CameraActivityChecker\bin\Debug\fr\*"; DestDir: "{app}\fr"; Flags: ignoreversion recursesubdirs
-Source: "{#MyFolderName}\CameraActivityChecker\bin\Debug\hu\*"; DestDir: "{app}\hu"; Flags: ignoreversion recursesubdirs
-Source: "{#MyFolderName}\CameraActivityChecker\bin\Debug\it\*"; DestDir: "{app}\it"; Flags: ignoreversion recursesubdirs
-Source: "{#MyFolderName}\CameraActivityChecker\bin\Debug\ja\*"; DestDir: "{app}\ja"; Flags: ignoreversion recursesubdirs
-Source: "{#MyFolderName}\CameraActivityChecker\bin\Debug\languages\*"; DestDir: "{app}\languages"; Flags: ignoreversion recursesubdirs
-Source: "{#MyFolderName}\CameraActivityChecker\bin\Debug\pt\*"; DestDir: "{app}\pt"; Flags: ignoreversion recursesubdirs
-Source: "{#MyFolderName}\CameraActivityChecker\bin\Debug\ru\*"; DestDir: "{app}\ru"; Flags: ignoreversion recursesubdirs
-Source: "{#MyFolderName}\CameraActivityChecker\bin\Debug\sk\*"; DestDir: "{app}\sk"; Flags: ignoreversion recursesubdirs
-Source: "{#MyFolderName}\CameraActivityChecker\bin\Debug\sv\*"; DestDir: "{app}\sv"; Flags: ignoreversion recursesubdirs
-Source: "{#MyFolderName}\CameraActivityChecker\bin\Debug\tr\*"; DestDir: "{app}\tr"; Flags: ignoreversion recursesubdirs
-Source: "{#MyFolderName}\CameraActivityChecker\bin\Debug\x64\*"; DestDir: "{app}\x64"; Flags: ignoreversion recursesubdirs
-Source: "{#MyFolderName}\CameraActivityChecker\bin\Debug\x86\*"; DestDir: "{app}\x86"; Flags: ignoreversion recursesubdirs
-Source: "{#MyFolderName}\CameraActivityChecker\bin\Debug\zh-cn\*"; DestDir: "{app}\zh-cn"; Flags: ignoreversion recursesubdirs
-Source: "{#MyFolderName}\CameraActivityChecker\bin\Debug\zh-tw\*"; DestDir: "{app}\zh-tw"; Flags: ignoreversion recursesubdirs
+Source: "{#MyFolderName}\CameraActivityChecker\bin\Release\CameraActivityChecker.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MyFolderName}\CameraActivityChecker\bin\Release\CameraActivityChecker.exe.config"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MyFolderName}\CameraActivityChecker\bin\Release\Emgu.CV.UI.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MyFolderName}\CameraActivityChecker\bin\Release\Emgu.CV.UI.GL.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MyFolderName}\CameraActivityChecker\bin\Release\Emgu.CV.World.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MyFolderName}\CameraActivityChecker\bin\Release\Languages.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MyFolderName}\CameraActivityChecker\bin\Release\OpenTK.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MyFolderName}\CameraActivityChecker\bin\Release\OpenTK.GLControl.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MyFolderName}\CameraActivityChecker\bin\Release\ZedGraph.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MyFolderName}\CameraActivityChecker\bin\Release\de\*"; DestDir: "{app}\de"; Flags: ignoreversion recursesubdirs
+Source: "{#MyFolderName}\CameraActivityChecker\bin\Release\es\*"; DestDir: "{app}\es"; Flags: ignoreversion recursesubdirs
+Source: "{#MyFolderName}\CameraActivityChecker\bin\Release\fr\*"; DestDir: "{app}\fr"; Flags: ignoreversion recursesubdirs
+Source: "{#MyFolderName}\CameraActivityChecker\bin\Release\hu\*"; DestDir: "{app}\hu"; Flags: ignoreversion recursesubdirs
+Source: "{#MyFolderName}\CameraActivityChecker\bin\Release\it\*"; DestDir: "{app}\it"; Flags: ignoreversion recursesubdirs
+Source: "{#MyFolderName}\CameraActivityChecker\bin\Release\ja\*"; DestDir: "{app}\ja"; Flags: ignoreversion recursesubdirs
+Source: "{#MyFolderName}\CameraActivityChecker\bin\Release\languages\*"; DestDir: "{app}\languages"; Flags: ignoreversion recursesubdirs
+Source: "{#MyFolderName}\CameraActivityChecker\bin\Release\pt\*"; DestDir: "{app}\pt"; Flags: ignoreversion recursesubdirs
+Source: "{#MyFolderName}\CameraActivityChecker\bin\Release\ru\*"; DestDir: "{app}\ru"; Flags: ignoreversion recursesubdirs
+Source: "{#MyFolderName}\CameraActivityChecker\bin\Release\sk\*"; DestDir: "{app}\sk"; Flags: ignoreversion recursesubdirs
+Source: "{#MyFolderName}\CameraActivityChecker\bin\Release\sv\*"; DestDir: "{app}\sv"; Flags: ignoreversion recursesubdirs
+Source: "{#MyFolderName}\CameraActivityChecker\bin\Release\tr\*"; DestDir: "{app}\tr"; Flags: ignoreversion recursesubdirs
+Source: "{#MyFolderName}\CameraActivityChecker\bin\Release\x64\*"; DestDir: "{app}\x64"; Flags: ignoreversion recursesubdirs
+Source: "{#MyFolderName}\CameraActivityChecker\bin\Release\x86\*"; DestDir: "{app}\x86"; Flags: ignoreversion recursesubdirs
+Source: "{#MyFolderName}\CameraActivityChecker\bin\Release\zh-cn\*"; DestDir: "{app}\zh-cn"; Flags: ignoreversion recursesubdirs
+Source: "{#MyFolderName}\CameraActivityChecker\bin\Release\zh-tw\*"; DestDir: "{app}\zh-tw"; Flags: ignoreversion recursesubdirs
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"

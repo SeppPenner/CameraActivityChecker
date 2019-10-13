@@ -16,5 +16,6 @@ The project uses [EmguCV](http://www.emgu.com/wiki/index.php/Main_Page) to detec
 Change history
 --------------
 
+* **Version 1.0.1.0 (2019-10-13)** : Updated nuget packages, added GitVersionTask.
 * **Version 1.0.0.1 (2019-05-07)** : Updated .Net version to 4.8.
 * **Version 1.0.0.0 (2017-09-01)** : 1.0 release.
