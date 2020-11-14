@@ -1,8 +1,8 @@
-﻿using System;
-using System.Runtime.InteropServices;
-
-namespace CameraActivityChecker.Notifications
+﻿namespace CameraActivityChecker.Notifications
 {
+    using System;
+    using System.Runtime.InteropServices;
+
     internal static class NativeMethods
     {
         /// <summary>
@@ -33,8 +33,7 @@ namespace CameraActivityChecker.Notifications
         internal static extern bool AnimateWindow(IntPtr hWnd, int dwTime, int dwFlags);
 
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
-        internal static extern IntPtr CreateRoundRectRgn
-        (
+        internal static extern IntPtr CreateRoundRectRgn(
             int nLeftRect, // x-coordinate of upper-left corner
             int nTopRect, // y-coordinate of upper-left corner
             int nRightRect, // x-coordinate of lower-right corner

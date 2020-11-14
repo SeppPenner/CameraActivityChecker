@@ -1,7 +1,7 @@
-using System.Drawing;
-
 namespace CameraActivityChecker.Notifications
 {
+    using System.Drawing;
+
     // ReSharper disable once UnusedMember.Global
     public class NotificationInfo
     {

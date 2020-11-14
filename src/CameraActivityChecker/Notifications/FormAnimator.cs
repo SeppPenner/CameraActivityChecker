@@ -1,9 +1,9 @@
-using System;
-using System.ComponentModel;
-using System.Windows.Forms;
-
 namespace CameraActivityChecker.Notifications
 {
+    using System;
+    using System.ComponentModel;
+    using System.Windows.Forms;
+
     /// <summary>
     ///     Animates a form when it is shown, hidden or closed
     /// </summary>
