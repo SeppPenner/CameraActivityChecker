@@ -2,7 +2,7 @@ CameraActivityChecker
 ====================================
 
 CameraActivityChecker is an executable to check if the camera gets activated.
-The executable was written and tested in .Net 4.8.
+The executable was written and tested in .Net Framework 4.8.
 
 [![Build status](https://ci.appveyor.com/api/projects/status/5ldvb10jtf47fwqo?svg=true)](https://ci.appveyor.com/project/SeppPenner/cameraactivitychecker)
 [![GitHub issues](https://img.shields.io/github/issues/SeppPenner/CameraActivityChecker.svg)](https://github.com/SeppPenner/CameraActivityChecker/issues)
