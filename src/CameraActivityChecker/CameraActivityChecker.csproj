@@ -7,15 +7,17 @@
     <ApplicationIcon>Webcam.ico</ApplicationIcon>
     <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
     <LangVersion>latest</LangVersion>
+    <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="EmguCV" Version="3.1.0.1" />
-    <PackageReference Include="GitVersion.MsBuild" Version="5.6.3">
+    <PackageReference Include="GitVersion.MsBuild" Version="5.6.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="HaemmerElectronics.SeppPenner.Language" Version="1.0.7" />
+    <PackageReference Include="System.Resources.Extensions" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -42,19 +42,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Files]
-Source: "..\src\CameraActivityChecker\bin\Release\netframework4.8\CameraActivityChecker.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\src\CameraActivityChecker\bin\Release\netframework4.8\CameraActivityChecker.exe.config"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\src\CameraActivityChecker\bin\Release\netframework4.8\Emgu.CV.UI.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\src\CameraActivityChecker\bin\Release\netframework4.8\Emgu.CV.UI.GL.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\src\CameraActivityChecker\bin\Release\netframework4.8\Emgu.CV.World.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\src\CameraActivityChecker\bin\Release\netframework4.8\Languages.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\src\CameraActivityChecker\bin\Release\netframework4.8\OpenTK.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\src\CameraActivityChecker\bin\Release\netframework4.8\OpenTK.GLControl.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\src\CameraActivityChecker\bin\Release\netframework4.8\ZedGraph.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\src\CameraActivityChecker\bin\Release\netframework4.8\License.txt"; DestDir: "{app}\de"; Flags: ignoreversion recursesubdirs
-Source: "..\src\CameraActivityChecker\bin\Release\netframework4.8\languages\*"; DestDir: "{app}\languages"; Flags: ignoreversion recursesubdirs
-Source: "..\src\CameraActivityChecker\bin\Release\netframework4.8\x64\*"; DestDir: "{app}\languages"; Flags: ignoreversion recursesubdirs
-Source: "..\src\CameraActivityChecker\bin\Release\netframework4.8\x86\*"; DestDir: "{app}\languages"; Flags: ignoreversion recursesubdirs
+Source: "..\src\CameraActivityChecker\bin\publish\*"; DestDir: "{app}\languages\"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
