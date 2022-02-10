@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "CameraActivityChecker"
-#define MyAppVersion "1.0.3.0"
+#define MyAppVersion "1.0.4.0"
 #define MyAppPublisher "Hämmer Electronics"
 #define MyAppURL "https://github.com/SeppPenner/CameraActivityChecker"
 #define MyAppExeName "CameraActivityChecker.exe"
