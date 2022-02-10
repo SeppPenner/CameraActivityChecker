@@ -19,7 +19,6 @@ namespace CameraActivityChecker.Notifications
         /// <param name="duration"></param>
         /// <param name="animation"></param>
         /// <param name="direction"></param>
-        // ReSharper disable once InheritdocConsiderUsage
         public Notification(string title, string body, int duration, FormAnimator.AnimationMethod animation,
             FormAnimator.AnimationDirection direction)
         {
@@ -45,7 +44,6 @@ namespace CameraActivityChecker.Notifications
         /// <remarks>
         ///     Required to allow the form to determine the current foreground window before being displayed
         /// </remarks>
-        // ReSharper disable once UnusedMember.Global
         public new void Show()
         {
             // Determine the current foreground window so it can be reactivated each time this form tries to get the focus

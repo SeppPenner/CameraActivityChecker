@@ -25,13 +25,11 @@ namespace CameraActivityChecker.Notifications
             /// <summary>
             ///     From left to right
             /// </summary>
-            // ReSharper disable once UnusedMember.Global
             Right = 0x1,
 
             /// <summary>
             ///     From right to left
             /// </summary>
-            // ReSharper disable once UnusedMember.Global
             Left = 0x2,
 
             /// <summary>
@@ -42,7 +40,6 @@ namespace CameraActivityChecker.Notifications
             /// <summary>
             ///     From bottom to top
             /// </summary>
-            // ReSharper disable once UnusedMember.Global
             Up = 0x8
         }
 
@@ -57,13 +54,11 @@ namespace CameraActivityChecker.Notifications
             /// <remarks>
             ///     This is the default animation method and requires a direction
             /// </remarks>
-            // ReSharper disable once UnusedMember.Global
             Roll = 0x0,
 
             /// <summary>
             ///     Expands out from center when showing and collapses into center when hiding
             /// </summary>
-            // ReSharper disable once UnusedMember.Global
             Center = 0x10,
 
             /// <summary>
@@ -72,7 +67,6 @@ namespace CameraActivityChecker.Notifications
             /// <remarks>
             ///     Requires a direction
             /// </remarks>
-            // ReSharper disable once UnusedMember.Global
             Slide = 0x40000,
 
             /// <summary>
@@ -126,7 +120,6 @@ namespace CameraActivityChecker.Notifications
         ///     No animation will be used unless the <b>Method</b> and/or <b>Direction</b> properties are set independently. The
         ///     <b>Duration</b> is set to quarter of a second by default.
         /// </remarks>
-        // ReSharper disable once MemberCanBePrivate.Global
         public FormAnimator(Form form)
         {
             _form = form;
@@ -155,8 +148,6 @@ namespace CameraActivityChecker.Notifications
         ///     No animation will be used for the <b>Roll</b> or <b>Slide</b> methods unless the <b>Direction</b> property is set
         ///     independently
         /// </remarks>
-        // ReSharper disable once InheritdocConsiderUsage
-        // ReSharper disable once MemberCanBePrivate.Global
         public FormAnimator(Form form, AnimationMethod method, int duration) : this(form)
         {
             _method = method;
@@ -183,7 +174,6 @@ namespace CameraActivityChecker.Notifications
         ///     The <i>direction</i> argument will have no effect if the <b>Center</b> or <b>Fade</b> method is
         ///     specified
         /// </remarks>
-        // ReSharper disable once InheritdocConsiderUsage
         public FormAnimator(Form form, AnimationMethod method, AnimationDirection direction, int duration) : this(form,
             method, duration)
         {
@@ -199,7 +189,6 @@ namespace CameraActivityChecker.Notifications
         /// <remarks>
         ///     <b>Roll</b> is used by default if no method is specified
         /// </remarks>
-        // ReSharper disable once UnusedMember.Global
         public AnimationMethod Method
         {
             get => _method;
@@ -217,7 +206,6 @@ namespace CameraActivityChecker.Notifications
         /// </remarks>
         public AnimationDirection Direction
         {
-            // ReSharper disable once UnusedMember.Global
             get => _direction;
             set => _direction = value;
         }
@@ -230,7 +218,6 @@ namespace CameraActivityChecker.Notifications
         /// </value>
         public int Duration
         {
-            // ReSharper disable once UnusedMember.Global
             get => _duration;
             set => _duration = value;
         }
@@ -241,7 +228,6 @@ namespace CameraActivityChecker.Notifications
         /// <value>
         ///     The form to be animated
         /// </value>
-        // ReSharper disable once UnusedMember.Global
         public Form Form => _form;
 
         /// <summary>

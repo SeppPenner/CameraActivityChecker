@@ -37,8 +37,9 @@ namespace CameraActivityChecker
         private void CheckCameraActivated()
         {
             while (true)
+            {
                 CheckCameraIsActive();
-            // ReSharper disable once FunctionNeverReturns
+            }
         }
 
         private void Initialize()
@@ -61,7 +62,7 @@ namespace CameraActivityChecker
             }
             catch
             {
-                // ReSharper disable once EmptyGeneralCatchClause
+                // ignore
             }
         }
 
