@@ -1,19 +1,21 @@
-﻿using System;
+namespace CameraActivityChecker;
+
+using System;
 using System.Windows.Forms;
 
-namespace CameraActivityChecker
+/// <summary>
+/// The main program.
+/// </summary>
+internal static class Program
 {
-    internal static class Program
+    /// <summary>
+    ///     Der Haupteinstiegspunkt für die Anwendung.
+    /// </summary>
+    [STAThread]
+    private static void Main()
     {
-        /// <summary>
-        ///     Der Haupteinstiegspunkt für die Anwendung.
-        /// </summary>
-        [STAThread]
-        private static void Main()
-        {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Main());
-        }
+        Application.EnableVisualStyles();
+        Application.SetCompatibleTextRenderingDefault(false);
+        Application.Run(new Main());
     }
 }

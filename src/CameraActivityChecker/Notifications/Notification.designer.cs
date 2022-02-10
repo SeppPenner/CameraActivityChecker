@@ -37,7 +37,7 @@ namespace CameraActivityChecker.Notifications
             // 
             // lifeTimer
             // 
-            this.lifeTimer.Tick += new System.EventHandler(this.lifeTimer_Tick);
+            this.lifeTimer.Tick += new System.EventHandler(this.LifeTimerTick);
             // 
             // labelBody
             // 
@@ -51,7 +51,7 @@ namespace CameraActivityChecker.Notifications
             this.labelBody.TabIndex = 0;
             this.labelBody.Text = "Body goes here and here and here and here and here";
             this.labelBody.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.labelBody.Click += new System.EventHandler(this.labelRO_Click);
+            this.labelBody.Click += new System.EventHandler(this.LabelROClick);
             // 
             // labelTitle
             // 
@@ -63,7 +63,7 @@ namespace CameraActivityChecker.Notifications
             this.labelTitle.Size = new System.Drawing.Size(253, 21);
             this.labelTitle.TabIndex = 0;
             this.labelTitle.Text = "title goes here";
-            this.labelTitle.Click += new System.EventHandler(this.labelTitle_Click);
+            this.labelTitle.Click += new System.EventHandler(this.LabelTitleClick);
             // 
             // Notification
             // 
@@ -84,11 +84,11 @@ namespace CameraActivityChecker.Notifications
             this.ShowInTaskbar = false;
             this.Text = "EDGE Shop Flag Notification";
             this.TopMost = true;
-            this.Activated += new System.EventHandler(this.Notification_Activated);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Notification_FormClosed);
-            this.Load += new System.EventHandler(this.Notification_Load);
-            this.Shown += new System.EventHandler(this.Notification_Shown);
-            this.Click += new System.EventHandler(this.Notification_Click);
+            this.Activated += new System.EventHandler(this.NotificationActivated);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.NotificationFormClosed);
+            this.Load += new System.EventHandler(this.NotificationLoad);
+            this.Shown += new System.EventHandler(this.NotificationShown);
+            this.Click += new System.EventHandler(this.NotificationClick);
             this.ResumeLayout(false);
 
         }
