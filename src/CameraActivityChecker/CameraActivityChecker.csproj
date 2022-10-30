@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <TargetFramework>netframework4.8</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <ApplicationIcon>Webcam.ico</ApplicationIcon>
