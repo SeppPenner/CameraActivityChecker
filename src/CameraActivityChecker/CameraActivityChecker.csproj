@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>netframework4.8</TargetFramework>
+        <TargetFramework>netframework4.8.1</TargetFramework>
         <UseWindowsForms>true</UseWindowsForms>
         <ApplicationIcon>Webcam.ico</ApplicationIcon>
         <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
@@ -12,6 +12,8 @@
         <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
         <NoWarn>NU1803</NoWarn>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <NuGetAuditMode>all</NuGetAuditMode>
+        <NuGetAudit>true</NuGetAudit>
     </PropertyGroup>
 
     <ItemGroup>
