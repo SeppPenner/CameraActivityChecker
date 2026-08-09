@@ -16,6 +16,66 @@ The migration was not only checked on paper: a working copy of the project was a
 `net10.0-windows` in the scratchpad and built. Result: **0 errors, 0 warnings**, with
 `TreatWarningsAsErrors` enabled. Details under "Verification".
 
+## What was implemented in the end
+
+This section was added after the analysis was acted upon. The rest of the document is kept as it was
+written, it documents why the decisions were made.
+
+The move to .NET 10 was done as described. The smoke test with a real camera then produced a result
+that changed the plan, see "Camera detection: what the smoke test showed" below: the camera detection
+does not use EmguCV any more at all. The dependency was dropped and replaced by the capability access
+data of Windows, which is the option that was described under "Recommendations beyond the migration
+itself". Everything about Emgu.CV 4.13 in this document therefore describes a step that was taken and
+then removed again, it is kept because it explains how the state of the detection was found out.
+
+What is in the code now:
+
+- `CameraUsageDetector` reads the consent store of Windows, no camera access of its own.
+- `Main` uses a `System.Windows.Forms.Timer` instead of the endless loop in the constructor, so the
+  message loop of the application is actually reached. The main form stays hidden.
+- The notification closes through its own life timer, the `Thread.Sleep` on the UI thread is gone.
+- The window region of the notification is set through `SetWindowRgn` after the form is shown, see
+  "The notification was never visible".
+
+Without the Emgu dependency the publish output is roughly 1 MB framework-dependent instead of the
+12.8 MB measured with the mini runtime, so the distribution question below gets easier, not harder.
+
+## Camera detection: what the smoke test showed
+
+The check `IsCameraActivated()` opened the camera and returned whether a frame could be grabbed. Both
+stacks were measured against a real camera, once with the camera free and once with the camera held by
+another process:
+
+| Camera state | old: EmguCV 3.1 | new: Emgu.CV 4.13 |
+| --- | --- | --- |
+| free | frame 640x480, result **true** | frame 640x480, result **true** |
+| held by another process | empty 0x0 frame, not null, result **true** | frame is null, result **false** |
+
+Two conclusions came out of this:
+
+1. **With EmguCV 3.1 the application never detected anything.** The result was always true, so the
+   state flipped once at startup and never again. Exactly one notification was shown, at startup.
+2. **With Emgu.CV 4.13 the states are told apart, but the meaning is inverted.** A free camera counted
+   as activated, a camera in use by another program counted as deactivated.
+
+On top of that, the check opened the camera roughly every 1.7 seconds, which keeps the camera busy and
+its indicator light on, and can take the camera away from other programs. That is what made the
+registry based detection the fix instead of just inverting the boolean.
+
+## The notification was never visible
+
+While verifying the new detection, the notifications turned out not to appear on screen although the
+window was created, positioned correctly and reported as visible. `GetWindowRgn` showed the reason: the
+window was clipped to a region of 46x14 pixels.
+
+The cause is `AnimateWindow`, which uses the window region itself for the animation and overwrites a
+region that was set before it runs. The line in the constructor of `Notification` therefore had no
+lasting effect and what remained was a frozen frame of the animation. The region is now applied
+through `SetWindowRgn` in the `Shown` handler, which is after the animation has finished.
+
+This is not a migration damage, it is an old defect. It never showed up because the application never
+got as far as displaying a notification.
+
 ## Starting point
 
 | Item | Current state |
@@ -169,7 +229,7 @@ Windows. With .NET 10 there are two ways:
 
 **Variant B: framework-dependent plus runtime prerequisite**
 
-- Payload of only 12.8 MB.
+- Payload of only 12.8 MB, and roughly 1 MB now that the Emgu dependency is gone.
 - The `.iss` needs a check for the installed .NET Desktop Runtime 10 and, if missing, a download step
   (Inno Setup 6.3 can do this through `DownloadTemporaryFile`).
 - In exchange the runtime stays current through Windows Update.
@@ -210,16 +270,20 @@ that answers with 404 and aborts the restore. That is not a project problem, a p
 
 ## Open points for the implementation
 
-1. **Smoke test with a real camera.** Emgu 4.13 uses different capture backends than 3.1. What needs
-   checking is whether `VideoCapture` still returns no frame while the camera is inactive.
-2. **Licensing.** Emgu CV is dual licensed under GPL v3 in 3.1 as well as in 4.13, while the project
-   itself is MIT. That is an existing state which the migration neither improves nor worsens, but it is
-   one more reason to have a look at point 2 of the recommendations.
+1. ~~**Smoke test with a real camera.**~~ Done, and it changed the plan, see "Camera detection: what
+   the smoke test showed".
+2. ~~**Licensing.**~~ Settled by dropping the dependency. Emgu CV is dual licensed under GPL v3 in 3.1
+   as well as in 4.13, while the project itself is MIT. Without Emgu CV the question no longer arises.
+3. **Still open: there is no way to quit the application** other than the task manager. That was
+   already the case before, but with a working message loop a `NotifyIcon` with a context menu is now
+   a small addition. It needs one more entry in both language files.
+4. **Still open: the notification window is named** `EDGE Shop Flag Notification` internally, a
+   leftover from wherever the class was taken from.
 
 ## Recommendations beyond the migration itself
 
-These points are not part of the move to .NET 10, but they stand out immediately when working on the
-code.
+These points were not part of the move to .NET 10 when this was written. Both of them were implemented
+in the end, see "What was implemented in the end".
 
 **1. The application never reaches its message loop.**
 `Application.Run(new Main())` never gets its turn, because the constructor of `Main` runs into a
@@ -245,16 +309,16 @@ This is a bigger change than the migration and should be kept separate from it.
 
 ## Suggested order
 
-1. Create a branch, switch to `net10.0-windows`, update SDK and packages, change `Capture` to
-   `VideoCapture`.
-2. Work through the six nullability and obsolete spots, the build has to be green with
-   `TreatWarningsAsErrors`.
-3. Remove `System.Resources.Extensions` and `OpenTK.dll.config`.
-4. Smoke test with a real camera, switching it on and off.
-5. Decide on the publish variant (A or B), adjust `build-setup-files.bat` and the `.iss`, build the
-   setup and test it on a machine without .NET 10.
-6. Move AppVeyor to the .NET 10 SDK, ideally with a checked-in `appveyor.yml`.
-7. Update `Changelog.md` and `README.md`, set the version to 1.1.0.0.
+1. ~~Switch to `net10.0-windows`, update SDK and packages, change `Capture` to `VideoCapture`.~~ Done.
+2. ~~Work through the six nullability and obsolete spots, the build has to be green with
+   `TreatWarningsAsErrors`.~~ Done.
+3. ~~Remove `System.Resources.Extensions` and `OpenTK.dll.config`.~~ Done.
+4. ~~Smoke test with a real camera, switching it on and off.~~ Done, and it led to dropping Emgu.CV
+   in favour of the registry based detection.
+5. **Open:** decide on the publish variant (A or B), adjust `build-setup-files.bat` and the `.iss`,
+   build the setup and test it on a machine without .NET 10.
+6. **Open:** move AppVeyor to the .NET 10 SDK, ideally with a checked-in `appveyor.yml`.
+7. ~~Update `Changelog.md` and `README.md`, set the version to 1.1.0.0.~~ Done.
 
 ## Effort
 
