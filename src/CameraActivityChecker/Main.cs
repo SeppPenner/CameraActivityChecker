@@ -1,10 +1,8 @@
 namespace CameraActivityChecker;
 
 using System;
-using System.Threading;
 using System.Windows.Forms;
 using CameraActivityChecker.Notifications;
-using Emgu.CV;
 using Languages.Implementation;
 using Languages.Interfaces;
 
@@ -14,14 +12,24 @@ using Languages.Interfaces;
 public partial class Main : Form
 {
     /// <summary>
+    /// The interval in milliseconds between two checks.
+    /// </summary>
+    private const int CheckIntervalInMilliseconds = 1000;
+
+    /// <summary>
+    /// The number of seconds a notification stays on screen.
+    /// </summary>
+    private const int NotificationDurationInSeconds = 3;
+
+    /// <summary>
+    /// The timer that triggers the checks.
+    /// </summary>
+    private readonly System.Windows.Forms.Timer checkTimer = new();
+
+    /// <summary>
     /// A value indicating whether the camera is activated or not.
     /// </summary>
     private bool cameraActivated;
-
-    /// <summary>
-    /// The capture.
-    /// </summary>
-    private VideoCapture capture = new();
 
     /// <summary>
     /// The language.
@@ -40,7 +48,22 @@ public partial class Main : Form
     {
         this.InitializeComponent();
         this.TryInitialize();
-        this.CheckCameraActivated();
+
+        // The state at startup is the reference, only a change from here on is worth a notification.
+        this.cameraActivated = CameraUsageDetector.IsCameraInUse();
+
+        this.checkTimer.Interval = CheckIntervalInMilliseconds;
+        this.checkTimer.Tick += this.CheckTimerTick;
+        this.checkTimer.Start();
+    }
+
+    /// <summary>
+    /// Keeps the main form hidden, the application only works through its notifications.
+    /// </summary>
+    /// <param name="value">A value indicating whether the form should be visible or not.</param>
+    protected override void SetVisibleCore(bool value)
+    {
+        base.SetVisibleCore(false);
     }
 
     /// <summary>
@@ -59,17 +82,6 @@ public partial class Main : Form
     }
 
     /// <summary>
-    /// Checks whether the camera is activated.
-    /// </summary>
-    private void CheckCameraActivated()
-    {
-        while (true)
-        {
-            this.CheckCameraIsActive();
-        }
-    }
-
-    /// <summary>
     /// Initializes the component.
     /// </summary>
     private void Initialize()
@@ -80,15 +92,23 @@ public partial class Main : Form
     }
 
     /// <summary>
+    /// The check timer tick handler.
+    /// </summary>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The event args.</param>
+    private void CheckTimerTick(object? sender, EventArgs e)
+    {
+        this.CheckCameraIsActive();
+    }
+
+    /// <summary>
     /// Checks whether the camera is activated.
     /// </summary>
     private void CheckCameraIsActive()
     {
         try
         {
-            var activated = this.IsCameraActivated();
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
+            var activated = CameraUsageDetector.IsCameraInUse();
 
             if (this.cameraActivated == activated)
             {
@@ -131,8 +151,7 @@ public partial class Main : Form
         }
 
         var message = this.language.GetWord("CameraDeactivated") ?? string.Empty;
-        var toastNotification = this.GetNotification(message);
-        this.ShowNotificationDelayed(toastNotification);
+        this.GetNotification(message).Show();
     }
 
     /// <summary>
@@ -146,19 +165,7 @@ public partial class Main : Form
         }
 
         var message = this.language.GetWord("CameraActivated") ?? string.Empty;
-        var toastNotification = this.GetNotification(message);
-        this.ShowNotificationDelayed(toastNotification);
-    }
-
-    /// <summary>
-    /// Shows the notification delayed.
-    /// </summary>
-    /// <param name="toastNotification">The notification.</param>
-    private void ShowNotificationDelayed(Notification toastNotification)
-    {
-        toastNotification.Show();
-        Thread.Sleep(2000);
-        toastNotification.Hide();
+        this.GetNotification(message).Show();
     }
 
     /// <summary>
@@ -168,17 +175,12 @@ public partial class Main : Form
     /// <returns>A <see cref="Notification"/>.</returns>
     private Notification GetNotification(string message)
     {
-        return new Notification(message, message, 1000, AnimationMethod.Center, AnimationDirection.Down);
-    }
-
-    /// <summary>
-    /// Gets a value indicating whether the camera is activated or not.
-    /// </summary>
-    /// <returns>True if the camera is activated, false if not.</returns>
-    private bool IsCameraActivated()
-    {
-        this.capture = new VideoCapture();
-        var frame = this.capture.QueryFrame();
-        return frame != null;
+        // The notification closes itself through its own life timer.
+        return new Notification(
+            message,
+            message,
+            NotificationDurationInSeconds,
+            AnimationMethod.Center,
+            AnimationDirection.Down);
     }
 }

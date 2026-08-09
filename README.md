@@ -13,7 +13,7 @@ CameraActivityChecker is an executable to check if the camera gets activated.
 [![Patreon](https://img.shields.io/badge/Patreon-F96854?logo=patreon&logoColor=white)](https://patreon.com/SeppPennerOpenSourceDevelopment)
 [![PayPal](https://img.shields.io/badge/PayPal-00457C?logo=paypal&logoColor=white)](https://paypal.me/th070795)
 
-The project uses [EmguCV](http://www.emgu.com/wiki/index.php/Main_Page) to detect if the camera got activated.
+The project reads the camera usage from the capability access data that Windows maintains itself, so the camera is never opened just to check it.
 
 Change history
 --------------

@@ -11,6 +11,11 @@ using System.Windows.Forms;
 public partial class Notification : Form
 {
     /// <summary>
+    /// The corner radius of the notification.
+    /// </summary>
+    private const int CornerRadius = 20;
+
+    /// <summary>
     /// The open notifications.
     /// </summary>
     private static readonly List<Notification> OpenNotifications = new ();
@@ -57,8 +62,6 @@ public partial class Notification : Form
         this.labelBody.Text = body;
 
         this.animator = new FormAnimator(this, animation, direction, 500);
-
-        this.Region = Region.FromHrgn(NativeMethods.CreateRoundRectRgn(0, 0, this.Width - 5, this.Height - 5, 20, 20));
     }
 
     /// <summary>
@@ -103,6 +106,27 @@ public partial class Notification : Form
     }
 
     /// <summary>
+    /// Gives the notification its rounded corners.
+    /// </summary>
+    /// <remarks>
+    /// The region is set through the window handle on purpose and only once the form is shown. The animation of
+    /// <see cref="FormAnimator"/> uses the window region itself, so a region set earlier is overwritten by the
+    /// animation and the notification ends up clipped to a fraction of its size.
+    /// </remarks>
+    private void UpdateRoundedCorners()
+    {
+        var region = NativeMethods.CreateRoundRectRgn(0, 0, this.Width, this.Height, CornerRadius, CornerRadius);
+
+        if (region == IntPtr.Zero)
+        {
+            return;
+        }
+
+        // The window owns the region from here on, so it must not be released.
+        NativeMethods.SetWindowRgn(this.Handle, region, true);
+    }
+
+    /// <summary>
     /// The notification activated handler.
     /// </summary>
     /// <param name="sender">The sender.</param>
@@ -123,6 +147,9 @@ public partial class Notification : Form
     /// <param name="e">The event args.</param>
     private void NotificationShown(object? sender, EventArgs e)
     {
+        // The show animation drives the window region itself, so the rounded corners have to be applied afterwards.
+        this.UpdateRoundedCorners();
+
         // Once the animation has completed the form can receive focus
         this.allowFocus = true;
 
