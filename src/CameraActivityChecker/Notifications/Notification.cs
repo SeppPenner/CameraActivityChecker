@@ -80,11 +80,17 @@ public partial class Notification : Form
     /// </summary>
     /// <param name="sender">The sender.</param>
     /// <param name="e">The event args.</param>
-    private void NotificationLoad(object sender, EventArgs e)
+    private void NotificationLoad(object? sender, EventArgs e)
     {
-        // Display the form just above the system tray.
-        this.Location = new Point(Screen.PrimaryScreen.WorkingArea.Width - this.Width,
-            Screen.PrimaryScreen.WorkingArea.Height - this.Height);
+        // There is no primary screen if no monitor is attached, in that case the default location is kept.
+        var primaryScreen = Screen.PrimaryScreen;
+
+        if (primaryScreen is not null)
+        {
+            // Display the form just above the system tray.
+            this.Location = new Point(primaryScreen.WorkingArea.Width - this.Width,
+                primaryScreen.WorkingArea.Height - this.Height);
+        }
 
         // Move each open form upwards to make room for this one
         foreach (var openForm in OpenNotifications)
@@ -101,7 +107,7 @@ public partial class Notification : Form
     /// </summary>
     /// <param name="sender">The sender.</param>
     /// <param name="e">The event args.</param>
-    private void NotificationActivated(object sender, EventArgs e)
+    private void NotificationActivated(object? sender, EventArgs e)
     {
         // Prevent the form taking focus when it is initially shown
         if (!this.allowFocus)
@@ -115,7 +121,7 @@ public partial class Notification : Form
     /// </summary>
     /// <param name="sender">The sender.</param>
     /// <param name="e">The event args.</param>
-    private void NotificationShown(object sender, EventArgs e)
+    private void NotificationShown(object? sender, EventArgs e)
     {
         // Once the animation has completed the form can receive focus
         this.allowFocus = true;
@@ -130,7 +136,7 @@ public partial class Notification : Form
     /// </summary>
     /// <param name="sender">The sender.</param>
     /// <param name="e">The event args.</param>
-    private void NotificationFormClosed(object sender, FormClosedEventArgs e)
+    private void NotificationFormClosed(object? sender, FormClosedEventArgs e)
     {
         // Move down any open forms above this one
         foreach (var openForm in OpenNotifications)
@@ -151,7 +157,7 @@ public partial class Notification : Form
     /// </summary>
     /// <param name="sender">The sender.</param>
     /// <param name="e">The event args.</param>
-    private void LifeTimerTick(object sender, EventArgs e)
+    private void LifeTimerTick(object? sender, EventArgs e)
     {
         this.Close();
     }
@@ -161,7 +167,7 @@ public partial class Notification : Form
     /// </summary>
     /// <param name="sender">The sender.</param>
     /// <param name="e">The event args.</param>
-    private void NotificationClick(object sender, EventArgs e)
+    private void NotificationClick(object? sender, EventArgs e)
     {
         this.Close();
     }
@@ -171,7 +177,7 @@ public partial class Notification : Form
     /// </summary>
     /// <param name="sender">The sender.</param>
     /// <param name="e">The event args.</param>
-    private void LabelTitleClick(object sender, EventArgs e)
+    private void LabelTitleClick(object? sender, EventArgs e)
     {
         this.Close();
     }
@@ -181,7 +187,7 @@ public partial class Notification : Form
     /// </summary>
     /// <param name="sender">The sender.</param>
     /// <param name="e">The event args.</param>
-    private void LabelROClick(object sender, EventArgs e)
+    private void LabelROClick(object? sender, EventArgs e)
     {
         this.Close();
     }

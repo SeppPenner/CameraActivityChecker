@@ -1,5 +1,6 @@
 # Change history
 
+* **Version 1.1.0.0 (2026-08-09)** : Moved to Net10.0, switched from EmguCV 3.1.0.1 to Emgu.CV 4.13.0 with the mini runtime, updated NuGet packages.
 * **Version 1.0.5.0 (2025-01-07)** : Updated Nuget packages, added audit mode, moved to NetFramework4.8.1.
 * **Version 1.0.4.0 (2022-02-10)** : Added nullable checks, added editorconfig, added file scoped namespaces, added global usings.
 * **Version 1.0.3.0 (2021-11-24)** : Updated nuget packages.

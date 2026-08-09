@@ -1,15 +1,14 @@
-<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>netframework4.8.1</TargetFramework>
+        <TargetFramework>net10.0-windows</TargetFramework>
         <UseWindowsForms>true</UseWindowsForms>
         <ApplicationIcon>Webcam.ico</ApplicationIcon>
-        <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+        <RuntimeIdentifier>win-x64</RuntimeIdentifier>
         <LangVersion>latest</LangVersion>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
         <NoWarn>NU1803</NoWarn>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
         <NuGetAuditMode>all</NuGetAuditMode>
@@ -17,13 +16,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="EmguCV" Version="3.1.0.1" />
+        <PackageReference Include="Emgu.CV" Version="4.13.0.5924" />
+        <PackageReference Include="Emgu.CV.runtime.mini.windows" Version="4.13.0.5924" />
         <PackageReference Include="GitVersion.MsBuild" Version="5.11.1">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="HaemmerElectronics.SeppPenner.Language" Version="1.1.2" />
-        <PackageReference Include="System.Resources.Extensions" Version="7.0.0" />
+        <PackageReference Include="HaemmerElectronics.SeppPenner.Language" Version="1.1.6" />
     </ItemGroup>
 
     <ItemGroup>
@@ -36,9 +35,13 @@
         <None Update="License.txt">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
-        <None Update="OpenTK.dll.config">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
     </ItemGroup>
+
+    <!-- The ffmpeg native library is only needed to read video files, not for camera capture. -->
+    <Target Name="RemoveFfmpegFromPublish" AfterTargets="ComputeFilesToPublish">
+        <ItemGroup>
+            <ResolvedFileToPublish Remove="@(ResolvedFileToPublish)" Condition="$([System.String]::Copy('%(Filename)').StartsWith('opencv_videoio_ffmpeg'))" />
+        </ItemGroup>
+    </Target>
 
 </Project>

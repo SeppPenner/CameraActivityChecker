@@ -1,7 +1,6 @@
 namespace CameraActivityChecker.Notifications;
 
 using System;
-using System.ComponentModel;
 using System.Windows.Forms;
 
 /// <summary>
@@ -64,7 +63,7 @@ public sealed class FormAnimator
 
         this.form.Load += this.Form_Load;
         this.form.VisibleChanged += this.Form_VisibleChanged;
-        this.form.Closing += this.Form_Closing;
+        this.form.FormClosing += this.Form_Closing;
 
         this.duration = DefaultDuration;
     }
@@ -171,7 +170,7 @@ public sealed class FormAnimator
     /// <summary>
     ///     Animates the form automatically when it is loaded
     /// </summary>
-    private void Form_Load(object sender, EventArgs e)
+    private void Form_Load(object? sender, EventArgs e)
     {
         // MDI child forms do not support transparency so do not try to use the Fade method
         if (this.form.MdiParent is null || this.method != AnimationMethod.Fade)
@@ -183,7 +182,7 @@ public sealed class FormAnimator
     /// <summary>
     ///     Animates the form automatically when it is shown or hidden
     /// </summary>
-    private void Form_VisibleChanged(object sender, EventArgs e)
+    private void Form_VisibleChanged(object? sender, EventArgs e)
     {
         // Do not attempt to animate MDI child forms while showing or hiding as they do not behave as expected
         if (this.form.MdiParent is null)
@@ -206,7 +205,7 @@ public sealed class FormAnimator
     /// <summary>
     ///     Animates the form automatically when it closes
     /// </summary>
-    private void Form_Closing(object sender, CancelEventArgs e)
+    private void Form_Closing(object? sender, FormClosingEventArgs e)
     {
         if (e.Cancel)
         {

@@ -21,7 +21,7 @@ public partial class Main : Form
     /// <summary>
     /// The capture.
     /// </summary>
-    private Capture capture = new Capture();
+    private VideoCapture capture = new();
 
     /// <summary>
     /// The language.
@@ -177,7 +177,7 @@ public partial class Main : Form
     /// <returns>True if the camera is activated, false if not.</returns>
     private bool IsCameraActivated()
     {
-        this.capture = new Capture();
+        this.capture = new VideoCapture();
         var frame = this.capture.QueryFrame();
         return frame != null;
     }
