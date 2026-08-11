@@ -65,9 +65,9 @@ application talks to the user through its own notification popups only.
 - The built installer `Setup/CameraActivityChecker-Setup.exe` is tracked in the repository, the
   `.gitignore` does not exclude it. Every release adds its full size to the history permanently.
 - The README shows an AppVeyor badge, but there is no build configuration in the repository.
-- `PrivilegesRequired` is not set while the quick launch icon points into `{userappdata}`. Inno
-  Setup would warn about that, the task is limited to Windows 7 and older through
-  `OnlyBelowVersion: 0,6.1` and therefore never runs.
+- `PrivilegesRequired` is not set, so Inno Setup uses `admin`, and every compile warns because the
+  quick launch icon points into `{userappdata}`. The task is limited to Windows 7 and older through
+  `OnlyBelowVersion: 0,6.1` and therefore never runs, the warning can be ignored.
 
 ## Releasing
 
