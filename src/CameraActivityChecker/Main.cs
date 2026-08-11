@@ -1,6 +1,8 @@
 namespace CameraActivityChecker;
 
 using System;
+using System.Globalization;
+using System.Linq;
 using System.Windows.Forms;
 using CameraActivityChecker.Notifications;
 using Languages.Implementation;
@@ -22,6 +24,11 @@ public partial class Main : Form
     private const int NotificationDurationInSeconds = 3;
 
     /// <summary>
+    /// The identifier of the language that is used if none of the language files fits the user interface language.
+    /// </summary>
+    private const string FallbackLanguageIdentifier = "de-DE";
+
+    /// <summary>
     /// The timer that triggers the checks.
     /// </summary>
     private readonly System.Windows.Forms.Timer checkTimer = new();
@@ -34,12 +41,12 @@ public partial class Main : Form
     /// <summary>
     /// The language.
     /// </summary>
+    /// <remarks>
+    /// The language manager itself is deliberately not kept in a field. Creating it reads the language files, and a
+    /// field initializer runs before the constructor body, so a broken installation would take the application down
+    /// before <see cref="TryInitialize"/> could report it.
+    /// </remarks>
     private ILanguage? language;
-
-    /// <summary>
-    /// The language manager.
-    /// </summary>
-    private ILanguageManager languageManager = new LanguageManager();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Main"/> class.
@@ -75,9 +82,9 @@ public partial class Main : Form
         {
             this.Initialize();
         }
-        catch
+        catch (Exception ex)
         {
-            Console.WriteLine("");
+            ShowError(ex);
         }
     }
 
@@ -86,9 +93,47 @@ public partial class Main : Form
     /// </summary>
     private void Initialize()
     {
-        this.languageManager = new LanguageManager();
-        this.languageManager.SetCurrentLanguage("de-DE");
-        this.language = this.languageManager.GetCurrentLanguage();
+        ILanguageManager languageManager = new LanguageManager();
+        languageManager.SetCurrentLanguage(GetLanguageIdentifier(languageManager));
+        this.language = languageManager.GetCurrentLanguage();
+    }
+
+    /// <summary>
+    /// Gets the identifier of the language that fits the user interface language of Windows.
+    /// </summary>
+    /// <param name="languageManager">The language manager holding the loaded languages.</param>
+    /// <returns>The identifier of the language to use.</returns>
+    /// <remarks>
+    /// Setting a language that is not loaded throws, so an identifier that is really there is preferred over anything
+    /// else. An exact match wins, then a language file for the same two letter language, then German, then whatever
+    /// was loaded first.
+    /// </remarks>
+    private static string GetLanguageIdentifier(ILanguageManager languageManager)
+    {
+        var identifiers = languageManager.GetLanguages().Select(loadedLanguage => loadedLanguage.Identifier).ToList();
+        var culture = CultureInfo.CurrentUICulture;
+
+        return identifiers.Find(identifier => identifier.Equals(culture.Name, StringComparison.OrdinalIgnoreCase))
+            ?? identifiers.Find(identifier => identifier.StartsWith($"{culture.TwoLetterISOLanguageName}-", StringComparison.OrdinalIgnoreCase))
+            ?? identifiers.Find(identifier => identifier.Equals(FallbackLanguageIdentifier, StringComparison.OrdinalIgnoreCase))
+            ?? identifiers.FirstOrDefault()
+            ?? FallbackLanguageIdentifier;
+    }
+
+    /// <summary>
+    /// Shows an error to the user.
+    /// </summary>
+    /// <param name="ex">The exception that was caught.</param>
+    /// <remarks>
+    /// The title is the product name and not a translated text on purpose: the only way into this method is a failure
+    /// while the language files are being loaded, so there is no language left to take a title from. Without this
+    /// dialog the application either dies without a word or keeps running without ever showing a notification, the
+    /// console output it wrote instead goes nowhere in a Windows application.
+    /// </remarks>
+    private static void ShowError(Exception ex)
+    {
+        var text = $"{ex.Message}{Environment.NewLine}{Environment.NewLine}{ex.StackTrace}";
+        MessageBox.Show(text, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
     }
 
     /// <summary>
