@@ -1,5 +1,6 @@
 # Change history
 
+* **Version 1.1.1.0 (2026-08-11)** : Updated NuGet packages, publish the setup content self contained, fixed the silently swallowed initialization error, the language is now taken from the user interface language of Windows, fixed the encoding of the setup script.
 * **Version 1.1.0.0 (2026-08-09)** : Moved to Net10.0, removed the EmguCV dependency and read the camera usage from the capability access data of Windows instead, fixed the notifications not being shown, updated NuGet packages.
 * **Version 1.0.5.0 (2025-01-07)** : Updated Nuget packages, added audit mode, moved to NetFramework4.8.1.
 * **Version 1.0.4.0 (2022-02-10)** : Added nullable checks, added editorconfig, added file scoped namespaces, added global usings.
