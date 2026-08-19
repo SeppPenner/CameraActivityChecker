@@ -62,12 +62,14 @@ application talks to the user through its own notification popups only.
   key has to be added to every language file.
 - `Webcam.ico` exists twice, as `src/Webcam.ico` and as `src/CameraActivityChecker/Webcam.ico`.
   Only the one inside the project folder is used, by `ApplicationIcon` and by the setup.
-- The built installer `Setup/CameraActivityChecker-Setup.exe` is tracked in the repository, the
-  `.gitignore` does not exclude it. Every release adds its full size to the history permanently.
+- The built installer `Setup/CameraActivityChecker-Setup.exe` is not tracked any more, it hangs on
+  the GitHub release of its version tag and `.gitignore` excludes `*.exe` now. Up to and including
+  1.1.1 it was committed, so the history carries one copy per release.
 - The README shows an AppVeyor badge, but there is no build configuration in the repository.
-- `PrivilegesRequired` is not set, so Inno Setup uses `admin`, and every compile warns because the
-  quick launch icon points into `{userappdata}`. The task is limited to Windows 7 and older through
-  `OnlyBelowVersion: 0,6.1` and therefore never runs, the warning can be ignored.
+- `PrivilegesRequired` is not set, so Inno Setup uses `admin`. The `quicklaunchicon` task that wrote
+  into `{userappdata}` and made every compile print the `UsedUserAreasWarning` is gone, it was
+  limited to Windows 7 and older through `OnlyBelowVersion: 0,6.1` and never ran. The compile is
+  warning free, keep it that way.
 
 ## Releasing
 
@@ -81,8 +83,26 @@ The order matters, the version is produced by GitVersion out of the tags:
    prerelease version into the shipped executable.
 5. Run `Setup/build-setup-files.bat`.
 6. Compile `Setup/CameraActivityChecker-Setup.iss` with `ISCC.exe`.
-7. Commit the new installer with the message `Updated setup.`.
-8. Push the branch and the tag.
+7. Push the branch and the tag.
+8. Attach `Setup/CameraActivityChecker-Setup.exe` to the GitHub release of that tag. **Never commit
+   the installer.** `Setup/` is the `OutputDir` of the Inno Setup script, so the file lands there
+   during the build and `.gitignore` covers it afterwards.
+
+For step 8 there is no `gh` on this machine. The GitHub API does the job, with the token that
+`git push` already uses, so nothing has to be stored anywhere:
+
+```bash
+c=$(printf "protocol=https\nhost=github.com\n\n" | git credential fill)
+tok=$(printf "%s" "$c" | grep '^password=' | cut -d= -f2-)
+id=$(curl -s -X POST -H "Authorization: Bearer $tok" \
+  https://api.github.com/repos/SeppPenner/CameraActivityChecker/releases \
+  -d '{"tag_name":"1.1.2","name":"1.1.2"}' | grep -m1 '"id"' | tr -dc 0-9)
+curl -s -X POST -H "Authorization: Bearer $tok" -H "Content-Type: application/octet-stream" \
+  --data-binary @Setup/CameraActivityChecker-Setup.exe \
+  "https://uploads.github.com/repos/SeppPenner/CameraActivityChecker/releases/$id/assets?name=CameraActivityChecker-Setup.exe"
+```
+
+Never print that token, and never write it into a file.
 
 ## Git
 
